@@ -6,3 +6,4 @@ spring:
       password: 123asd
       username: admin
       database: product-service
+      authentication-database: admin
