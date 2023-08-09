@@ -10,18 +10,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.bbnsdevelop.productservice.dto.ProductDto;
 import br.com.bbnsdevelop.productservice.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
+@Tag(name = "products", description = "Product management APIs")
 @RestController
 @RequestMapping("/products")
 @AllArgsConstructor
 public class ProductController {
-	
+
 	private final ProductService service;
-	
-	
+
+	@Operation(summary = "Find all products", description = "Get a list of product object. The response is product object with id, name, description and price.", tags = {
+			"products" })
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", content = {
+					@Content(schema = @Schema(implementation = ProductDto.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@GetMapping
-	public ResponseEntity<List<ProductDto>> getAll(){
+	public ResponseEntity<List<ProductDto>> getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAllProduct());
 	}
 
