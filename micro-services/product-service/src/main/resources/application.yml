@@ -7,3 +7,7 @@ spring:
       username: admin
       database: product-service
       authentication-database: admin
+
+openapi:
+  dev-url: http://localhost:8080
+  prod-url: http://127.0.0.1:8080
