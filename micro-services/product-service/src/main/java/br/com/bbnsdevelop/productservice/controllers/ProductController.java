@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @Tag(name = "products", description = "Product management APIs")
@@ -42,7 +43,7 @@ public class ProductController {
 	
 	
 	@PostMapping("/v1")
-	public ResponseEntity<Void> create(@RequestBody ProductDto dto){
+	public ResponseEntity<Void> create(@Valid @RequestBody ProductDto dto){
 		service.save(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).build();		
 	}
