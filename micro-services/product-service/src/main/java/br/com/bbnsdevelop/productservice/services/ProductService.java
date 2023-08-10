@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import br.com.bbnsdevelop.productservice.dto.ProductDto;
+import br.com.bbnsdevelop.productservice.model.Product;
 import br.com.bbnsdevelop.productservice.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,12 @@ public class ProductService {
 		log.info("find all product");
 		
 		return repository.findAll().stream().map(s -> modelMapper.map(s, ProductDto.class)).collect(Collectors.toList());
+	}
+
+
+	public void save(ProductDto dto) {
+		Product produtc = modelMapper.map(dto, Product.class);
+		this.repository.save(produtc);
 	}
 
 }

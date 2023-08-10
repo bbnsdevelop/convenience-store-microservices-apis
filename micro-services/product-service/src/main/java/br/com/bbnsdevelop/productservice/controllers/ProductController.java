@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,7 @@ import lombok.AllArgsConstructor;
 
 @Tag(name = "products", description = "Product management APIs")
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 @AllArgsConstructor
 public class ProductController {
 
@@ -33,9 +35,17 @@ public class ProductController {
 					@Content(schema = @Schema(implementation = ProductDto.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@GetMapping
+	@GetMapping("/v1")
 	public ResponseEntity<List<ProductDto>> getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAllProduct());
 	}
+	
+	
+	@PostMapping("/v1")
+	public ResponseEntity<Void> create(@RequestBody ProductDto dto){
+		service.save(dto);
+		return ResponseEntity.status(HttpStatus.CREATED).build();		
+	}
+	
 
 }
