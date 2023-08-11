@@ -61,6 +61,16 @@ class ProductServiceApplicationTests {
 		Assertions.assertEquals(1, productRepository.getAllProduct().size());
 	}
 	
+	
+	@Test
+	void shouldThrowExceptionWhenCreateProduct() throws Exception {
+		ProductDto productRequest = ProductDto.builder().name("Iphone Pro Max").description("Iphone").build();
+		String productRequestString = objectMapper.writeValueAsString(productRequest);
+		mockMvc.perform(MockMvcRequestBuilders.post("/api/products/v1").contentType(MediaType.APPLICATION_JSON)
+				.content(productRequestString)).andExpect(status().isBadRequest());
+		
+	}
+	
 	@Test
 	void shouldFindAllProducts() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/products/v1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
