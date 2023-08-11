@@ -1,4 +1,4 @@
-package br.com.bbnsdevelop.productservice;
+package br.com.bbnsdevelop.productservice.controllers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +29,7 @@ import br.com.bbnsdevelop.productservice.services.ProductService;
 	    "openapi.dev-url=testValue",
 	    "openapi.prod-url=testValue",
 	})
-class ProductServiceApplicationTests {
+class ProductControllerTests {
 
 	@Container
 	static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.4.2");
