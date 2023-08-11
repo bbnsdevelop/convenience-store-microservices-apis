@@ -60,6 +60,12 @@ class ProductServiceApplicationTests {
 				.content(productRequestString)).andExpect(status().isCreated());
 		Assertions.assertEquals(1, productRepository.getAllProduct().size());
 	}
+	
+	@Test
+	void shouldFindAllProducts() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/products/v1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		Assertions.assertEquals(0, productRepository.getAllProduct().size());
+	}
 
 	private ProductDto getProductRequest() {
 		return ProductDto.builder().name("iPhone 13").description("iPhone 13").price(BigDecimal.valueOf(1200)).build();
