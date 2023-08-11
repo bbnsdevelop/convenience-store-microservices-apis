@@ -19,7 +19,7 @@ public class ProductService {
 	
 	private final ProductRepository repository;
 	private final ModelMapper modelMapper;
-	
+	 
 
 	public List<ProductDto> getAllProduct() {
 		log.info("find all product");
@@ -30,6 +30,7 @@ public class ProductService {
 
 	public void save(ProductDto dto) {
 		Product produtc = modelMapper.map(dto, Product.class);
+		log.info("saving product: {}", produtc);
 		this.repository.save(produtc);
 	}
 
