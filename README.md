@@ -17,7 +17,8 @@
 - Git version control
 - API Gateway
 - Vault
-- Discover server
+- Service discovery
+- Centralized configuration
 
 
 
