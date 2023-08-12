@@ -1,10 +1,23 @@
 # Spring Boot Microservices
 
 
-To run this project you will need this technologies:
-Java 17
-apache-maven-3.9.4 or currently version
-Docker and docker-compose.
+# This repo was concept to learn about microservices architecture and it uses:
+- Java 17
+- apache-maven-3.9.4 or currently version
+- Docker and docker-compose.
+- mongo
+- mysql
+- elasticsearch 
+- kibana
+- logstash
+- kafka
+- rabbitMQ
+- Zipkin
+- Circuit Break (Resilience4J)
+- Git version control
+- API Gateway
+- Vault
+- Discover server
 
 
 
