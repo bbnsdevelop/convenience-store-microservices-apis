@@ -40,13 +40,18 @@ public class ProductController {
 	public ResponseEntity<List<ProductDto>> getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAllProduct());
 	}
-	
-	
+
+	@Operation(summary = "Create new product", description = "This resource provide create new product, name and price are mandatory.", tags = {
+			"products" })
+	@ApiResponses({
+			@ApiResponse(responseCode = "201", content = {
+					@Content(schema = @Schema(implementation = Void.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }),
+			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@PostMapping("/v1")
-	public ResponseEntity<Void> create(@Valid @RequestBody ProductDto dto){
+	public ResponseEntity<Void> create(@Valid @RequestBody ProductDto dto) {
 		service.save(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).build();		
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-	
 
 }
