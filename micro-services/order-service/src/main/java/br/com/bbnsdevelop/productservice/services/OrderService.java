@@ -10,7 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +38,7 @@ public class OrderService {
 
     public void create(OrderDto dto) {
         Order o = convertToEntity(dto);
+        o.setOrderNumber(generateHash());
         repository.save(o);
         log.info("saved order: {}", o);
     }
@@ -44,4 +50,10 @@ public class OrderService {
     private Order convertToEntity(OrderDto dto){
         return modelMapper.map(dto, Order.class);
     }
+
+    private String generateHash(){
+        LocalDateTime now = LocalDateTime.now();
+        return Math.abs(new Random().nextInt()) + "#" +  DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss", Locale.ENGLISH).format(now);
+    }
+
 }
