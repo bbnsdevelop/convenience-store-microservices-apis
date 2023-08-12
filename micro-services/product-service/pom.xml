@@ -14,6 +14,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
+		 <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
 	</properties>
 
 	<parent>
@@ -74,12 +75,12 @@
 			<artifactId>mongodb</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		 <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 

@@ -51,21 +51,21 @@ public class InventoryController {
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@GetMapping("/v1/{sku-code}")
 	public ResponseEntity<Boolean> isInStock(@PathVariable("sku-code") String skuCode ) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.checkStock(skuCode));
+		return ResponseEntity.status(HttpStatus.OK).body(service.isInStock(skuCode));
 	}
 	
 	
 	
 	@Operation(summary = "Save inventory", description = "Save.", tags = { "inventories" })
 	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {
+			@ApiResponse(responseCode = "201", content = {
 					@Content(schema = @Schema(implementation = Void.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@PostMapping("/v1")
 	public ResponseEntity<Void> create( @Valid @RequestBody InventoryDto dto ) {
 		service.save(dto);
-		return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 }

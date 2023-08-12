@@ -29,5 +29,16 @@ public class HandleCustomException {
 		log.error("Bad request: {}", errors);
 		return new ResponseEntity<Map<String, String>>(errors, HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@ExceptionHandler(value = { IntegrationException.class })
+	public ResponseEntity<Map<String, String>> integrationException(IntegrationException ex,
+			WebRequest request) {
+		Map<String, String> errors = new HashMap<>();		
+		errors.put("Inventory", ex.getMessage());
+		
+		log.error("Bad request: {}", errors);
+		return new ResponseEntity<Map<String, String>>(errors, HttpStatus.BAD_REQUEST);
+	}
 
 }

@@ -30,26 +30,47 @@ public class INventoryService {
 
 	
 	public void save(InventoryDto dto) {
-		Inventory entity = convertToEntity(dto);
+		Inventory entity = null;
+		Optional<Inventory> opt = checkStock(dto.getSkuCode());
+		if(opt.isPresent()) {
+			entity = opt.get();
+			entity.setQuantity(dto.getQuantity());
+		}else {
+			entity = convertToEntity(dto); 
+		}
+		 
 		repository.save(entity);
 		log.info("saved inventory: {}", entity);
 	}
 
-	private InventoryDto convertToDto(Inventory i) {		 
+	
+	
+	public Boolean isInStock(String skuCode) {
+		Optional<Inventory> opt = checkStock(skuCode);
+		if(opt.isPresent()) {			
+			return opt.get().getQuantity() >= 1;			
+		}else{
+			return false;
+		}
+	}
+	
+	
+	private Optional<Inventory> checkStock(String skuCode) {
+		Optional<Inventory> opt = repository.findByskuCode(skuCode);		
+		return opt;
+	}
+	
+	
+	private InventoryDto convertToDto(Inventory i) {
 		return mapper.map(i, InventoryDto.class);
 	}
 	
 	
-	private Inventory convertToEntity(InventoryDto dto) {		 
+	private Inventory convertToEntity(InventoryDto dto) {
 		return mapper.map(dto, Inventory.class);
 	}
 
 
-	public Boolean checkStock(String skuCode) {
-		Optional<Inventory> opt = repository.findByskuCode(skuCode);
-		opt.orElseThrow(() -> new NotFoundException("Product ".concat(skuCode).concat(" not found")));
-		return opt.isPresent();
-	}
 	
 
 }

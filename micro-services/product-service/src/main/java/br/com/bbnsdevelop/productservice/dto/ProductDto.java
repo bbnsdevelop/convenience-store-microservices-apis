@@ -24,5 +24,9 @@ public class ProductDto {
     
     @NotNull(message = "price is mandatory")
     private BigDecimal price;
+    
+    
+    @NotNull(message = "quantity is mandatory")
+    private Integer quantity;
 
 }
