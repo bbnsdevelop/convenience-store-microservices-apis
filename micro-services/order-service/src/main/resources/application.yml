@@ -5,6 +5,8 @@ openapi:
   dev-url: http://localhost:8081
   prod-url: http://127.0.0.1:8081
 
+server-inventory:
+  url: ${URL_INVENTORY:http://localhost:8082}
 
 spring:
   datasource:

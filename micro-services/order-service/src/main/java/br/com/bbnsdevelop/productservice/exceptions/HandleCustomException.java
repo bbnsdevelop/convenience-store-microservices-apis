@@ -36,5 +36,15 @@ public class HandleCustomException {
         log.error("Bad request: {}", errors);
         return new ResponseEntity<Map<String, String>>(errors, HttpStatus.BAD_REQUEST);
     }
+    
+    @ExceptionHandler(value = { NotHasInventoryException.class })
+    public ResponseEntity<Map<String, String>> notHasInventoryException(NotHasInventoryException ex,  WebRequest request) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("Error", ex.getMessage());
+        log.error("Bad request: {}", errors);
+        return new ResponseEntity<Map<String, String>>(errors, HttpStatus.BAD_REQUEST);
+    }
+    
+    
 
 }

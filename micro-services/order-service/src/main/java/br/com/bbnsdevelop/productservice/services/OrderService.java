@@ -1,21 +1,23 @@
 package br.com.bbnsdevelop.productservice.services;
 
-import br.com.bbnsdevelop.productservice.exceptions.NotFoundException;
-import br.com.bbnsdevelop.productservice.dto.OrderDto;
-import br.com.bbnsdevelop.productservice.entities.Order;
-import br.com.bbnsdevelop.productservice.repositories.OrderLineItemRepository;
-import br.com.bbnsdevelop.productservice.repositories.OrderRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.bbnsdevelop.productservice.dto.OrderDto;
+import br.com.bbnsdevelop.productservice.entities.Order;
+import br.com.bbnsdevelop.productservice.exceptions.NotFoundException;
+import br.com.bbnsdevelop.productservice.exceptions.NotHasInventoryException;
+import br.com.bbnsdevelop.productservice.repositories.OrderRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +25,8 @@ import java.util.Random;
 public class OrderService {
 
     private final OrderRepository repository;
-    private final OrderLineItemRepository itemRepository;
     private final ModelMapper modelMapper;
+    private final IventoryClientService iventoryClientService;
 
     public List<OrderDto> getAll() {
         log.info("find all orders");
@@ -36,10 +38,17 @@ public class OrderService {
         return convertToDto(repository.findById(id).orElseThrow(() -> new NotFoundException("Order: ".concat(id.toString()).concat(" not found"))));
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void create(OrderDto dto) {
-        Order o = convertToEntity(dto);
-        o.setOrderNumber(generateHash());
-        repository.save(o);
+    	    	
+    	dto.getOrderLineItemsList().stream().forEach(item ->{
+    		if(!iventoryClientService.hasInStock(item.getSkuCode())) {
+    			throw new NotHasInventoryException("Note has item "+ item.getSkuCode()+ " in stock");		
+    		}    		
+    	});
+    	Order o = convertToEntity(dto);
+    	o.setOrderNumber(generateHash());
+    	repository.save(o);    	
         log.info("saved order: {}", o);
     }
 
