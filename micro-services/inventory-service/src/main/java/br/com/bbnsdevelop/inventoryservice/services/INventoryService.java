@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.bbnsdevelop.inventoryservice.dto.InventoryDto;
 import br.com.bbnsdevelop.inventoryservice.entities.Inventory;
-import br.com.bbnsdevelop.inventoryservice.exceptions.NotFoundException;
 import br.com.bbnsdevelop.inventoryservice.repositories.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
