@@ -37,6 +37,23 @@
 # Discovery server
 - http://localhost:8761/
 
+# API Gateway
+- http://localhost:8080/
+
+  - Services expose on API gateway
+    * routes:
+      - id: product-service
+        uri: lb://product-service
+        predicates:
+        - Path=/api/products/v1
+        - Method=GET,POST
+      - id: order-service
+        uri: lb://order-service
+        predicates:
+        - Path=/api/orders/v1,/api/orders/v1/{id}
+        - Method=GET,POST
+        
+- example of url: http://localhost:8080/api/orders/v1
 
 
 # log - elasticsearch
