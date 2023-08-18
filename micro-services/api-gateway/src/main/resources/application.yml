@@ -1,0 +1,11 @@
+server:
+  port: ${PORT_API_GATEWAY:8080}
+
+spring:
+  application:
+    name: order-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
