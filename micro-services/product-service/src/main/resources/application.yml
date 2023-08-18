@@ -1,5 +1,5 @@
 server:
-  port: ${PORT_PRODUCT_SERVICE:8080}
+  port: ${PORT_PRODUCT_SERVICE:8081}
 
 spring:
   data:

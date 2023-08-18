@@ -1,5 +1,5 @@
 server:
-  port: ${PORT_INVENTORY:8082}
+  port: ${PORT_INVENTORY:8083}
 
 
 openapi:

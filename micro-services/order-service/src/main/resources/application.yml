@@ -1,5 +1,5 @@
 server:
-  port: ${PORT_ORDER_SERVICE:8081}
+  port: ${PORT_ORDER_SERVICE:8082}
 
 openapi:
   dev-url: http://localhost:8081
