@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: ${PORT_INVENTORY:8082}
 
 
 openapi:
@@ -17,3 +17,11 @@ spring:
     hibernate:
       ddl-auto: update    
     show-sql: true
+  application:
+    name: inventory-service
+ 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+      

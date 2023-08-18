@@ -1,3 +1,6 @@
+server:
+  port: ${PORT_PRODUCT_SERVICE:8080}
+
 spring:
   data:
     mongodb:
@@ -7,6 +10,8 @@ spring:
       username: admin
       database: product-service
       authentication-database: admin
+  application:
+    name: product-service
 
 openapi:
   dev-url: http://localhost:8080
@@ -14,3 +19,10 @@ openapi:
 
 inventory-service:
   url: ${ENDPOINT_INVENTORY:http://localhost:8082}
+
+  
+ 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
