@@ -31,6 +31,12 @@
 # Swagger url API's
 - product service: http://localhost:8080/swagger-ui/index.html
 - order service: http://localhost:8081/swagger-ui/index.html
+- inventory service: http://localhost:8082/swagger-ui/index.html
+
+
+# Discovery server
+- http://localhost:8761/
+
 
 
 # log - elasticsearch
