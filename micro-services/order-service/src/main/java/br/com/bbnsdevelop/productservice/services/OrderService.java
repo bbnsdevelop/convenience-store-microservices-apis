@@ -43,7 +43,7 @@ public class OrderService {
     	    	
     	dto.getOrderLineItemsList().stream().forEach(item ->{
     		if(!iventoryClientService.hasInStock(item.getSkuCode())) {
-    			throw new NotHasInventoryException("Note has item "+ item.getSkuCode()+ " in stock");		
+    			throw new NotHasInventoryException("This item "+ item.getSkuCode()+ " is not available in stock");		
     		}    		
     	});
     	Order o = convertToEntity(dto);
