@@ -37,6 +37,9 @@
 # Discovery server
 - http://localhost:8761/
 
+* Discovery exposed in gateway 
+    - http://localhost:8080/eureka/web
+
 # API Gateway
 - http://localhost:8080/
 
@@ -52,7 +55,7 @@
         predicates:
         - Path=/api/orders/v1,/api/orders/v1/{id}
         - Method=GET,POST
-        
+
 - example of url: http://localhost:8080/api/orders/v1
 
 
