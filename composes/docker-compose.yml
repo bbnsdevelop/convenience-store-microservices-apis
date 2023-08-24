@@ -106,6 +106,38 @@ services:
       depends_on:
         - elasticsearch
 
+## Keycloak Config with Mysql database
+  keycloak-mysql:
+    container_name: keycloak-mysql
+    restart: always
+    image: mysql:5.7
+    volumes:
+      - ~/media/b2/file_storage/volumes-docker/mysql_keycloak_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+
+  keycloak:
+    container_name: mykeycloak
+    restart: always
+    image: quay.io/keycloak/keycloak:18.0.0
+    command: [ "start-dev", "--import-realm" ]
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8181:8080"
+    volumes:
+      - ~/media/b2/file_storage/volumes-docker/realms/:/opt/keycloak/data/import/
+    depends_on:
+      - keycloak-mysql
 
 # Names our volume
 volumes:

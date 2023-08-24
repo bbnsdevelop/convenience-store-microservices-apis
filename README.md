@@ -29,9 +29,9 @@
 
 
 # Swagger url API's
-- product service: http://localhost:8080/swagger-ui/index.html
-- order service: http://localhost:8081/swagger-ui/index.html
-- inventory service: http://localhost:8082/swagger-ui/index.html
+- product service: http://localhost:8081/swagger-ui/index.html
+- order service: http://localhost:8082/swagger-ui/index.html
+- inventory service: http://localhost:8083/swagger-ui/index.html
 
 
 # Discovery server
@@ -62,6 +62,12 @@
 # log - elasticsearch
 - http://localhost:5601/app/
 
+
+# Security
+- Keycloak url: http://localhost:8181/
+- client name: convinience-cloud-client
+- client url issuer: http://localhost:8181/realms/convinience-cloud-client
+- client url Token: http://localhost:8181/realms/convinience-cloud-client/protocol/openid-connect/token
 
 # Databases
 
