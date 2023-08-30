@@ -43,7 +43,7 @@ public class OrderService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void create(OrderDto dto) {
+	public String create(OrderDto dto) {
 
 		List<String> skuCodes = dto.getOrderLineItemsList().stream().map(OrderLineItemDto::getSkuCode).toList();
 
@@ -58,6 +58,7 @@ public class OrderService {
 		o.setOrderNumber(generateHash());
 		repository.save(o);
 		log.info("saved order: {}", o);
+		return "Order accepted";
 	}
 
 	private OrderDto convertToDto(Order o) {

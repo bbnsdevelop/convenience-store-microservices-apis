@@ -64,6 +64,7 @@
 
 
 # Security
+- configuration: http://localhost:8181/realms/convinience-cloud-client/.well-known/openid-configuration
 - Keycloak url: http://localhost:8181/
 - client name: convinience-cloud-client
 - client url issuer: http://localhost:8181/realms/convinience-cloud-client
