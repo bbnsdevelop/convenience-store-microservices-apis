@@ -1,6 +1,7 @@
 package br.com.bbnsdevelop.productservice.controllers;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.bbnsdevelop.productservice.dto.ProductDto;
 import br.com.bbnsdevelop.productservice.services.ProductService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,11 +24,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Tag(name = "products", description = "Product management APIs")
 @RestController
 @RequestMapping("/api/products")
 @AllArgsConstructor
+@Slf4j
 public class ProductController {
 
 	private final ProductService service;
@@ -49,9 +55,18 @@ public class ProductController {
 			@ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@PostMapping("/v1")
-	public ResponseEntity<Void> create(@Valid @RequestBody ProductDto dto) {
-		service.save(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	@CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod")
+	@TimeLimiter(name = "inventory")
+	@Retry(name = "inventory")
+	public ResponseEntity<CompletableFuture<String>> create(@Valid @RequestBody ProductDto dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(CompletableFuture.supplyAsync(() ->service.save(dto)));
 	}
+	
+	 
+    public ResponseEntity<String> fallbackMethod(ProductDto dto, RuntimeException exception) {
+    	log.error("Erro: {}", exception.getMessage());
+    	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong, please order after some time!");
+    }
+    
 
 }

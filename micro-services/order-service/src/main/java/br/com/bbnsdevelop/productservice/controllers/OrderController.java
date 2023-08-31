@@ -70,9 +70,9 @@ public class OrderController {
     @CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod")
     @TimeLimiter(name = "inventory")
     @Retry(name = "inventory")
-    public ResponseEntity<CompletableFuture<Void>> create(@Valid @RequestBody OrderDto dto){    	
-    	CompletableFuture.supplyAsync(() ->service.create(dto));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<CompletableFuture<String>> create(@Valid @RequestBody OrderDto dto){    	
+    	
+        return ResponseEntity.status(HttpStatus.CREATED).body(CompletableFuture.supplyAsync(() ->service.create(dto)));
     }
     
     

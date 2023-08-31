@@ -35,13 +35,14 @@ public class ProductService {
 
 
 	@Transactional
-	public void save(ProductDto dto) {
+	public String save(ProductDto dto) {
 		Product produtc = modelMapper.map(dto, Product.class);
 		this.repository.save(produtc);
 		log.info("saving product: {}", produtc);
 			
 		log.info("sendiing product to inventory: {}", produtc);
-		serviceInventory.save(produtc.getId(), produtc.getQuantity());		
+		serviceInventory.save(produtc.getId(), produtc.getQuantity());	
+		return "Created with success";
 	}
 
 }
