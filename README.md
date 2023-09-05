@@ -1,6 +1,5 @@
 # Spring Boot Microservices
 
-
 # This repo was concept to learn about microservices architecture and it uses:
 - Java 17
 - apache-maven-3.9.4 or currently version
